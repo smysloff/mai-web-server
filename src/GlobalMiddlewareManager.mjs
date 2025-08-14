@@ -1,9 +1,9 @@
 
-// file: src/GlobalMiddlewaresManager.mjs
+// file: src/GlobalMiddlewareManager.mjs
 
 import CoreMiddlewares from './CoreMiddlewares.mjs'
 
-export default class GlobalMiddlewaresManager {
+export default class GlobalMiddlewareManager {
 
   constructor() {
     this.stack = new Map()

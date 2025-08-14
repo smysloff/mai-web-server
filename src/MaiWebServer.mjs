@@ -3,16 +3,16 @@
 
 import http from 'node:http'
 
-import GlobalMiddlewaresManager from './GlobalMiddlewaresManager.mjs'
-import RoutesMiddlewaresManager from './RoutesMiddlewaresManager.mjs'
+import GlobalMiddlewareManager from './GlobalMiddlewareManager.mjs'
+import RoutesMiddlewareManager from './RoutesMiddlewareManager.mjs'
 
 export default class MaiWebServer {
 
   constructor() {
 
     this.server = new http.Server()
-    this.global = new GlobalMiddlewaresManager()
-    this.routes = new RoutesMiddlewaresManager()
+    this.global = new GlobalMiddlewareManager()
+    this.routes = new RoutesMiddlewareManager()
 
     const findOwner = (target, prop) => {
       if (prop in target.global) return target.global

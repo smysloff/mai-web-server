@@ -1,5 +1,5 @@
 
-// file: src/RoutesMiddlewaresManager.mjs
+// file: src/RoutesMiddlewareManager.mjs
 
 class HttpRoute {
 
@@ -18,7 +18,7 @@ class HttpRoute {
 
 }
 
-export default class RoutesMiddlewaresManager {
+export default class RoutesMiddlewareManager {
 
   constructor() {
     this.stack = new Map()
