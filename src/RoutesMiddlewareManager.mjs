@@ -31,28 +31,39 @@ export default class RoutesMiddlewareManager {
     return this.stack.get(path)
   }
 
-  all(path, ...middlewares) {
+  addMiddlewares(method, pathOrMiddleware, ...middlewares) {
+    if (typeof pathOrMiddleware === 'string') {
+      this.getRoute(method, pathOrMiddleware)
+          .addMiddlewares(...middlewares)
+    } else {
+      this.getRoute(method, '*')
+          .addMiddlewares(pathOrMiddleware, ...middlewares)
+    }
+    return this
+  }
 
+  all(pathOrMiddleware, ...middlewares) {
+    this.addMiddlewares('all', pathOrMiddleware, ...middlewares)
   }
 
   get(path, ...middlewares) {
-
+    this.addMiddlewares('get', pathOrMiddleware, ...middlewares)
   }
 
   post(path, ...middlewares) {
-
+    this.addMiddlewares('post', pathOrMiddleware, ...middlewares)
   }
 
   put(path, ...middlewares) {
-
+    this.addMiddlewares('put', pathOrMiddleware, ...middlewares)
   }
 
   delete(path, ...middlewares) {
-
+    this.addMiddlewares('delete', pathOrMiddleware, ...middlewares)
   }
 
-  process(request, response) {
-
+  async process(request, response) {
+    // @todo
   }
 
 }

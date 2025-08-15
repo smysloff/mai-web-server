@@ -47,10 +47,10 @@ export default class MaiWebServer {
 
   listen(port, ...options) {
 
-    this.server.on('request', (request, response) => {
+    this.server.on('request', async (request, response) => {
       request.app = response.app = this
-      this.global.process(request, response)
-      this.routes.process(request, response)
+      await this.global.process(request, response)
+      await this.routes.process(request, response)
     })
 
     this.server.listen(port, ...options)
