@@ -1,0 +1,26 @@
+{
+  "name": "mai-web-server",
+  "description": "Tiny and simple web server inspired by express.js",
+  "version": "0.0.1",
+  "keywords": ["web", "server", "http", "http2"],
+  "homepage": "https://github.com/smysloff/mai-web-server",
+  "bugs": {
+    "url": "https://github.com/smysloff/mai-web-server/issues",
+    "email": "kokoc.smyslov@yandex.ru"
+  },
+  "license": "GPL-3.0-or-later",
+  "author": {
+    "name": "ishimai",
+    "email": "kokoc.smyslov@yandex.ru",
+    "url": "https://ishimai.org"
+  },
+  "main": "index.mjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smysloff/mai-web-server"
+  },
+  "scripts": {
+    "test": "echo \"no tests are specified\""
+  },
+  "packageManager": "yarn@4.9.2"
+}
