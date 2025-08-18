@@ -6,17 +6,17 @@ import CoreMiddlewares from './CoreMiddlewares.mjs'
 export default class GlobalMiddlewareManager {
 
   constructor() {
-    this.stack = new Map()
+    this.#stack = new Map()
   }
 
-  use(prefix, ...middlewares) {
+  use(prefixOrMiddleware, ...middlewares) {
 
     if (
-      typeof prefix !== 'string'
-      && typeof prefix !== 'function'
+      typeof prefixOrMiddleware !== 'string'
+      && typeof prefixOrMiddleware !== 'function'
     ) {
       throw new TypeError(
-        `Invalid argument: prefix must be a string (route path) or a function (middleware), but received type '${typeof prefix}'.`
+        `Invalid argument: 'prefixOrMiddleware' must be a string (route path) or a function (middleware), but received type '${typeof prefixOrMiddleware}'.`
       )
     }
 
@@ -29,20 +29,17 @@ export default class GlobalMiddlewareManager {
     }
 
     const getRoute = (prefix) => {
-      if (!this.stack.has(prefix)) {
-        this.stack.set(prefix, [
-          CoreMiddlewares.updateRequest,
-          CoreMiddlewares.updateResponse,
-        ])
+      if (!this.#stack.has(prefix)) {
+        this.#stack.set(prefix, [])
       }
-      return this.stack.get(prefix)
+      return this.#stack.get(prefix)
     }
 
-    if (typeof prefix === 'function') {
+    if (typeof prefixOrMiddleware === 'function') {
       const route = getRoute('/')
-      route.push(prefix, ...middlewares)
+      route.push(prefixOrMiddleware, ...middlewares)
     } else {
-      const route = getRoute(prefix)
+      const route = getRoute(prefixOrMiddleware)
       route.push(...middlewares)
     }
 
@@ -50,12 +47,17 @@ export default class GlobalMiddlewareManager {
 
   async process(request, response) {
 
-    const { path } = request
+    await CoreMiddlewares.updateRequest(
+      request, response, async () => {})
+
+    await CoreMiddlewares.updateResponse(
+      request, response, async () => {})
 
     const matchedMiddlewares = []
+    const { path } = request
 
     for (
-      const [fileprefix, middlewares] of this.stack.entries()
+      const [fileprefix, middlewares] of this.#stack.entries()
     ) {
 
       const dirprefix = fileprefix.endsWith('/')

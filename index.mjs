@@ -10,7 +10,7 @@ const logger = async (request, response, next) => {
 
 const app = new MaiWebServer()
 
-app.use('/', logger, (request, response) => {
+app.get('/', logger, (request, response) => {
   response.writeHead(200, { 'content-type': 'text/html; charset=utf8' })
   response.end('<h1>JavaScript Sucks!</h1>')
 })
