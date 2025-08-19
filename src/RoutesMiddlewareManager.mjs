@@ -1,45 +1,24 @@
 
 // file: src/RoutesMiddlewareManager.mjs
 
-class HttpRoute {
-
-  getMiddlewares(method) {
-    if (!(method in this)) {
-      this[method] = []
-    }
-    return this[method]
-  }
-
-  addMiddlewares(method, ...middlewares) {
-    const list = this.getMiddlewares(method)
-    list.push(...middlewares)
-    return this
-  }
-
-  error404(request, response) {
-    response.writeHead(404, {
-      'content-type': 'text/html; charset=utf8'
-    })
-    response.end('<h1>Error 404: Page Not Found</h1>')
-  }
-
-}
+import HttpRoute from './HttpRoute.mjs'
+import CoreMiddlewares from './CoreMiddlewares.mjs'
 
 export default class RoutesMiddlewareManager {
 
-  #stack
+  #stack = new Map()
 
-  #getRoute(method, path) {
+  #getRoute(path) {
     if (!this.#stack.has(path)) {
       this.#stack.set(path, new HttpRoute())
     }
     return this.#stack.get(path)
   }
 
-  #matchRoute(method, path) {
+  #matchRoutes(path) {
     const routes = []
     for (const [pattern, route] of this.#stack) {
-      const regexp = new RegExp(pattern)
+      const regexp = new RegExp('^' + pattern + '$')
       if (regexp.test(path)) routes.push(route)
     }
     return routes
@@ -49,17 +28,14 @@ export default class RoutesMiddlewareManager {
 
     typeof pathOrMiddleware === 'string'
 
-      ? this.#getRoute(method, pathOrMiddleware)
-            .addMiddlewares(...middlewares)
+      ? this.#getRoute(pathOrMiddleware)
+            .addMiddlewares(method, ...middlewares)
 
-      : this.#getRoute(method, '*')
-            .addMiddlewares(pathOrMiddleware, ...middlewares)
+      : this.#getRoute(method, '/')
+            .addMiddlewares(
+              method, pathOrMiddleware, ...middlewares)
 
     return this
-  }
-
-  constructor() {
-    this.#stack = new Map()
   }
 
   all(pathOrMiddleware, ...middlewares) {
@@ -92,9 +68,7 @@ export default class RoutesMiddlewareManager {
     const method = request.method.toLowerCase()
     const { path } = request
     const matchedMiddlewares = []
-    const routes = this.#matchRoute(path)
-
-    if (!routes.length) return
+    const routes = this.#matchRoutes(path)
 
     for (const route of routes) {
       matchedMiddlewares.push(...route.getMiddlewares('all'))
@@ -102,6 +76,8 @@ export default class RoutesMiddlewareManager {
         matchedMiddlewares.push(...route.getMiddlewares(method))
       }
     }
+
+    matchedMiddlewares.push(CoreMiddlewares.defaultError404)
 
     let index = 0
 

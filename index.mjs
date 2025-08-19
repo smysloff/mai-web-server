@@ -3,16 +3,29 @@
 
 import MaiWebServer from './src/MaiWebServer.mjs'
 
-const logger = async (request, response, next) => {
-  console.log(`${request.url} logger!`)
+const app = new MaiWebServer()
+const port = 8081
+
+app.listen(port,
+  () => console.log(`server starts on port: ${port}`))
+
+async function logger(request, response, next) {
+  const { path } = request
+  const { statusCode } = response
+  console.log(`server: ${path} ${statusCode}`)
   await next()
 }
 
-const app = new MaiWebServer()
+async function homePage(request, response) {
+  response.send('<h1>Welcome to MaiWebServer!</h1>')
+}
 
-app.get('/', logger, (request, response) => {
-  response.writeHead(200, { 'content-type': 'text/html; charset=utf8' })
-  response.end('<h1>JavaScript Sucks!</h1>')
-})
+async function jsonTestPage(request, response) {
+  const data = { JavaScript: 'Sucks!' }
+  response.send(data)
+}
 
-app.listen(3000, () => console.log(`server starts on port: 3000`))
+app.get('/', logger, homePage)
+app.get('/js', logger, jsonTestPage)
+
+

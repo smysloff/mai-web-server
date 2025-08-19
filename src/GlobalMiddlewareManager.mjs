@@ -5,11 +5,18 @@ import CoreMiddlewares from './CoreMiddlewares.mjs'
 
 export default class GlobalMiddlewareManager {
 
-  constructor() {
-    this.#stack = new Map()
+  #stack = new Map()
+
+  #getRoute(prefix) {
+    if (!this.#stack.has(prefix)) {
+      this.#stack.set(prefix, [])
+    }
+    return this.#stack.get(prefix)
   }
 
   use(prefixOrMiddleware, ...middlewares) {
+
+    // validate arguments
 
     if (
       typeof prefixOrMiddleware !== 'string'
@@ -28,18 +35,14 @@ export default class GlobalMiddlewareManager {
       }
     }
 
-    const getRoute = (prefix) => {
-      if (!this.#stack.has(prefix)) {
-        this.#stack.set(prefix, [])
-      }
-      return this.#stack.get(prefix)
-    }
+
+    // add middlewares to routes
 
     if (typeof prefixOrMiddleware === 'function') {
-      const route = getRoute('/')
+      const route = this.#getRoute('/')
       route.push(prefixOrMiddleware, ...middlewares)
     } else {
-      const route = getRoute(prefixOrMiddleware)
+      const route = this.#getRoute(prefixOrMiddleware)
       route.push(...middlewares)
     }
 
@@ -47,11 +50,16 @@ export default class GlobalMiddlewareManager {
 
   async process(request, response) {
 
+    // update HttpRequest and HttpResponse
+
     await CoreMiddlewares.updateRequest(
       request, response, async () => {})
 
     await CoreMiddlewares.updateResponse(
       request, response, async () => {})
+
+
+    // find all middlewares for the path
 
     const matchedMiddlewares = []
     const { path } = request
@@ -69,6 +77,9 @@ export default class GlobalMiddlewareManager {
       }
 
     }
+
+
+    // run through all matched middlewares
 
     let index = 0
 
