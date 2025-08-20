@@ -18,7 +18,8 @@ export default class RoutesMiddlewareManager {
   #matchRoutes(path) {
     const routes = []
     for (const [pattern, route] of this.#stack) {
-      const regexp = new RegExp('^' + pattern + '$')
+      let prepared = pattern.replace(/\*/, '.*')
+      const regexp = new RegExp('^' + prepared + '$')
       if (regexp.test(path)) routes.push(route)
     }
     return routes
