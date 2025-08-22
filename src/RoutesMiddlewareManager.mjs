@@ -41,28 +41,23 @@ export default class RoutesMiddlewareManager {
   }
 
   all(pathOrMiddleware, ...middlewares) {
-    this.#addMiddlewares(
-      'all', pathOrMiddleware, ...middlewares)
+    this.#addMiddlewares('all', pathOrMiddleware, ...middlewares)
   }
 
   get(pathOrMiddleware, ...middlewares) {
-    this.#addMiddlewares(
-      'get', pathOrMiddleware, ...middlewares)
+    this.#addMiddlewares('get', pathOrMiddleware, ...middlewares)
   }
 
   post(pathOrMiddleware, ...middlewares) {
-    this.#addMiddlewares(
-      'post', pathOrMiddleware, ...middlewares)
+    this.#addMiddlewares('post', pathOrMiddleware, ...middlewares)
   }
 
   put(pathOrMiddleware, ...middlewares) {
-    this.#addMiddlewares(
-      'put', pathOrMiddleware, ...middlewares)
+    this.#addMiddlewares('put', pathOrMiddleware, ...middlewares)
   }
 
   delete(pathOrMiddleware, ...middlewares) {
-    this.#addMiddlewares(
-      'delete', pathOrMiddleware, ...middlewares)
+    this.#addMiddlewares('delete', pathOrMiddleware, ...middlewares)
   }
 
   async process(request, response) {
@@ -70,9 +65,9 @@ export default class RoutesMiddlewareManager {
     const method = request.method.toLowerCase()
     const { path } = request
     const matchedMiddlewares = []
+    const emptyRoute = { route: new HttpRoute(), params: {} }
 
-    const { route, params } =
-      this.#matchRoute(path) || { route: new HttpRoute(), params: {} }
+    const { route, params } = this.#matchRoute(path) || emptyRoute
 
     matchedMiddlewares.push(...route.getMiddlewares('all'))
     if (method !== 'all') {

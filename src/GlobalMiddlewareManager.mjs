@@ -18,19 +18,19 @@ export default class GlobalMiddlewareManager {
 
     // validate arguments
 
-    if (
-      typeof prefixOrMiddleware !== 'string'
-      && typeof prefixOrMiddleware !== 'function'
-    ) {
+    const type = typeof prefixOrMiddleware
+
+    if (!['string', 'function'].includes(type)) {
       throw new TypeError(
-        `Invalid argument: 'prefixOrMiddleware' must be a string (route path) or a function (middleware), but received type '${typeof prefixOrMiddleware}'.`
+        `Invalid argument: 'prefixOrMiddleware' must be a string (route path) or a function (middleware), but received type '${type}'.`
       )
     }
 
     for (const [i, middleware] of middlewares.entries()) {
-      if (typeof middleware !== 'function') {
+      const type = typeof middleware
+      if (type !== 'function') {
         throw new TypeError(
-          `Invalid middleware at position ${i + 1}: expected a function but received type '${typeof middleware}'.`
+          `Invalid middleware at position ${i + 1}: expected a function but received type '${type}'.`
         )
       }
     }
@@ -52,11 +52,8 @@ export default class GlobalMiddlewareManager {
 
     // update HttpRequest and HttpResponse
 
-    await CoreMiddlewares.updateRequest(
-      request, response, async () => {})
-
-    await CoreMiddlewares.updateResponse(
-      request, response, async () => {})
+    await CoreMiddlewares.updateRequest(request, response, async () => {})
+    await CoreMiddlewares.updateResponse(request, response, async () => {})
 
 
     // find all middlewares for the path
@@ -64,9 +61,7 @@ export default class GlobalMiddlewareManager {
     const matchedMiddlewares = []
     const { path } = request
 
-    for (
-      const [fileprefix, middlewares] of this.#stack.entries()
-    ) {
+    for (const [fileprefix, middlewares] of this.#stack.entries()) {
 
       const dirprefix = fileprefix.endsWith('/')
         ? fileprefix

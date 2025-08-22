@@ -20,16 +20,12 @@ export default class HttpRoute {
 
   #getRegexp(pattern) {
     // @todo add arg validation
-    const regexp = pattern.replace(
-      this.#defaultParamPatternExp,
-      (...args) => {
-        const param = args.at(1)
-        const customPatternStr = args.at(3)
-        const patternStr =
-          customPatternStr || this.#defaultParamPatternStr
-        return `(?<${param}>${patternStr})`
-      }
-    )
+    const regexp = pattern.replace(this.#defaultParamPatternExp, (...args) => {
+      const param = args.at(1)
+      const customPatternStr = args.at(3)
+      const patternStr = customPatternStr || this.#defaultParamPatternStr
+      return `(?<${param}>${patternStr})`
+    })
     return new RegExp(`^${regexp}$`, 'u')
   }
 

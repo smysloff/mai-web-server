@@ -53,6 +53,5 @@ app.get('/api/1?1', logger, api1page)
 app.get('/api/1+2', logger, api2page)
 app.get('/api/1*3', logger, api3page)
 
-app.listen(port,
-  () => console.log(`server starts on port: ${port}`))
+app.listen(port, () => console.log(`server starts on port: ${port}`))
 
