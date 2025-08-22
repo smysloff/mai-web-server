@@ -10,7 +10,7 @@ export default class RoutesMiddlewareManager {
 
   #getRoute(path) {
     if (!this.#stack.has(path)) {
-      this.#stack.set(path, new HttpRoute())
+      this.#stack.set(path, new HttpRoute(path))
     }
     return this.#stack.get(path)
   }
