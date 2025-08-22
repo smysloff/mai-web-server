@@ -15,14 +15,15 @@ export default class RoutesMiddlewareManager {
     return this.#stack.get(path)
   }
 
-  #matchRoutes(path) {
+  #matchRoute(path) {
     const routes = []
-    for (const [pattern, route] of this.#stack) {
-      let prepared = pattern.replace(/\*/, '.*')
-      const regexp = new RegExp('^' + prepared + '$')
-      if (regexp.test(path)) routes.push(route)
+    for (const route of this.#stack.values()) {
+      const matchRouteResponse = route.match(path)
+      if (matchRouteResponse.matched) {
+        return matchRouteResponse
+      }
     }
-    return routes
+    return null
   }
 
   #addMiddlewares(method, pathOrMiddleware, ...middlewares) {
@@ -69,16 +70,17 @@ export default class RoutesMiddlewareManager {
     const method = request.method.toLowerCase()
     const { path } = request
     const matchedMiddlewares = []
-    const routes = this.#matchRoutes(path)
 
-    for (const route of routes) {
-      matchedMiddlewares.push(...route.getMiddlewares('all'))
-      if (method !== 'all') {
-        matchedMiddlewares.push(...route.getMiddlewares(method))
-      }
+    const { route, params } =
+      this.#matchRoute(path) || { route: new HttpRoute(), params: {} }
+
+    matchedMiddlewares.push(...route.getMiddlewares('all'))
+    if (method !== 'all') {
+      matchedMiddlewares.push(...route.getMiddlewares(method))
     }
-
     matchedMiddlewares.push(CoreMiddlewares.defaultError404)
+
+    request.params = params
 
     let index = 0
 

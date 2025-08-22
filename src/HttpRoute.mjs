@@ -1,9 +1,10 @@
 
 // file: src/HttpRoute.mjs
 
-class MatchResponse {
-  constructor(matched) {
-    this.matched = matched == null
+class MatchRouteResponse {
+  constructor(route, matched) {
+    this.route = route
+    this.matched = matched !== null
     this.params = matched?.groups
       ? Object.freeze(matched.groups)
       : {}
@@ -24,7 +25,8 @@ export default class HttpRoute {
       (...args) => {
         const param = args.at(1)
         const customPatternStr = args.at(3)
-        const patternStr = customPatternStr || this.#defaultParamPatternStr
+        const patternStr =
+          customPatternStr || this.#defaultParamPatternStr
         return `(?<${param}>${patternStr})`
       }
     )
@@ -34,13 +36,15 @@ export default class HttpRoute {
   constructor(pattern) {
     // @todo arg validation
     this.pattern = pattern
-    this.regexp = this.#getRegexp(value)
+    if (pattern) {
+      this.regexp = this.#getRegexp(pattern)
+    }
   }
 
   match(path) {
     // @todo arg validation
     const matched = path.match(this.regexp)
-    return new MatchResponse(matched)
+    return new MatchRouteResponse(this, matched)
   }
 
   getParams(matched) {

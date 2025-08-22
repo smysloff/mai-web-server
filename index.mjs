@@ -48,7 +48,7 @@ async function api3page(request, response) {
 
 app.get('/', logger, homePage)
 app.get('/js', logger, jsonTestPage)
-app.get('/blog/:title', logger, blogPostPage)
+app.get('/blog/:title([-\\w]+)', logger, blogPostPage)
 app.get('/api/1?1', logger, api1page)
 app.get('/api/1+2', logger, api2page)
 app.get('/api/1*3', logger, api3page)

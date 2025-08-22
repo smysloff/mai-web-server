@@ -46,10 +46,16 @@ export default class CoreMiddlewares {
 
     response.send = (data) => {
       if (!response.headersSent) {
-        const contentType = getContentType(data)
-        response.setHeader('Content-Type', `${contentType}; charset=utf8`)
+        response.setHeader(
+          'Content-Type',
+          `${getContentType(data)}; charset=utf8`
+        )
       }
-      response.end(typeof data === 'object' ? JSON.stringify(data) : data)
+      response.end(
+        typeof data === 'object'
+          ? JSON.stringify(data)
+          : data
+      )
     }
 
     await next()
