@@ -92,15 +92,11 @@ export function padZeros(num, size) {
 export function getDateTime(date = new Date(), fmt = '%y-%m-%d %h:%i:%s') {
 
   if (!(date instanceof Date || isString(date))) {
-    throw new TypeError(
-      `The first argument of 'getDateTime' must be an instance of Date or a date-formatted string. Received type: ${ typeof date }.`
-    )
+    throw new TypeError(`The first argument of 'getDateTime' must be an instance of Date or a date-formatted string. Received type: ${ typeof date }.`)
   }
 
   if (!isString(fmt)) {
-    throw new TypeError(
-      `The second argument of 'getDateTime' must be a date-formatted string. Received type: ${ typeof fmt }.`
-    )
+    throw new TypeError(`The second argument of 'getDateTime' must be a date-formatted string. Received type: ${ typeof fmt }.`)
   }
 
   if (isString(date)) {
@@ -127,4 +123,3 @@ export function getDateTime(date = new Date(), fmt = '%y-%m-%d %h:%i:%s') {
     .replaceAll('%i', i)
     .replaceAll('%s', s)
 }
-

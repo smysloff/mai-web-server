@@ -7,24 +7,18 @@ export default class Layer {
 
   static checkPath(path) {
     if (!isString(path)) {
-      throw new TypeError(
-        `'path' must be a 'string' type`
-      )
+      throw new TypeError(`'path' must be a 'string' type`)
     }
     return path.toLowerCase()
   }
 
   static checkHandlers(handlers) {
     if (!isArray(handlers)) {
-      throw new TypeError(
-        `'handlers' must be an array of functions`
-      )
+      throw new TypeError(`'handlers' must be an array of functions`)
     }
     handlers = handlers.flat()
     if (!handlers.every(isFunction)) {
-      throw new TypeError(
-        `every 'handler' must be a 'function' type`
-      )
+      throw new TypeError(`every 'handler' must be a 'function' type`)
     }
     return handlers
   }

@@ -7,7 +7,6 @@ import HttpServer from './src/HttpServer.mjs'
 import { getReadableIP, getDateTime } from './src/utils.mjs'
 import Env from './src/Env.mjs'
 
-
 try {
 
   const env = await Env.parse('.env')
@@ -23,26 +22,19 @@ try {
     if (env.key) options.key = await readFile(env.key)
     if (env.cert) options.cert = await readFile(env.cert)
   } catch (error) {
-    console.error(
-      `${ getDateTime() } <SERVER>: Failed to load SSL certificates:`,
-      error.message
-    )
+    console.error(`${ getDateTime() } <SERVER>: Failed to load SSL certificates:`, error.message)
     exit(1)
   }
 
   if (env.uid) options.uid = env.uid
   if (env.gid) options.gid = env.gid
 
-
   const server = new HttpServer(options)
 
   server.use((request, response, next) => {
 
-    const clientAddress =
-      getReadableIP(request.socket.remoteAddress)
-
+    const clientAddress = getReadableIP(request.socket.remoteAddress)
     const clientPort = request.socket.remotePort
-
     const { url, method } = request
     const client = `${ clientAddress }:${ clientPort }`
 

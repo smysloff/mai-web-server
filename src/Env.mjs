@@ -26,7 +26,7 @@ export default class Env {
           })
 
     } catch (error) {
-      console.error(`can't read file ${ filename }`)
+      console.error(`Can't read file ${ filename }:`, error.message)
     }
 
     return Object.freeze(env)
@@ -34,9 +34,7 @@ export default class Env {
 
   constructor(privateSymbol) {
     if (privateSymbol !== Env.#privateSymbol) {
-      throw new Error(
-        `Attempt to use private constructor. Use static method(s) instead.`
-      )
+      throw new Error(`Attempt to use private constructor. Use static method(s) instead.`)
     }
   }
 

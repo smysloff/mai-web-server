@@ -51,7 +51,7 @@ const server = new HttpServer()
 
 // Global middleware
 server.use((request, response, next) => {
-  console.log(`${new Date().toISOString()} - ${request.method} ${request.url}`)
+  console.log(`${new Date().toISOString()} - ${ request.method } ${ request.url }`)
   next()
 })
 
@@ -147,8 +147,8 @@ gid=1000
 
 ```javascript
 const server = new HttpServer({
-  cert: './certs/cert.pem',
-  key: './certs/key.pem'
+  cert: './ssl/cert.pem',
+  key: './ssl/key.pem'
 })
 
 server.listen(443, () => {

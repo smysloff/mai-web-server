@@ -7,16 +7,13 @@ import { isString } from './utils.mjs'
 export default class Route extends Layer {
 
   static pathToRegexp(path) {
-    const regexp = path
-      .replaceAll(/\/:([\w-]+)/gui, '(?<$1>/[\\w-]+)')
+    const regexp = path.replaceAll(/\/:([\w-]+)/gui, '(?<$1>/[\\w-]+)')
     return new RegExp('^' + regexp + '$')
   }
 
   static checkMethod(method) {
     if (!isString(method)) {
-      throw new TypeError(
-        `'method' must be a 'string' type`
-      )
+      throw new TypeError(`'method' must be a 'string' type`)
     }
     return method.toUpperCase()
   }

@@ -79,15 +79,11 @@ export default class HttpServer {
 
         if (this.host) {
           redirectServer.listen(80, this.host, () => {
-            console.log(
-              `${ getDateTime() } <SERVER>: redirect server start listen on port 80`
-            )
+            console.log(`${ getDateTime() } <SERVER>: redirect server start listen on port 80`)
           })
         } else {
           redirectServer.listen(80, () => {
-            console.log(
-              `${ getDateTime() } <SERVER>: redirect server start listen on port 80`
-            )
+            console.log(`${ getDateTime() } <SERVER>: redirect server start listen on port 80`)
           })
         }
 
@@ -107,13 +103,9 @@ export default class HttpServer {
         try {
           setgid(gid)
           setuid(uid)
-          console.log(
-            `${ getDateTime() } <SERVER>: privileges dropped to uid=${ uid }, gid=${ gid } `
-          )
+          console.log(`${ getDateTime() } <SERVER>: privileges dropped to uid=${ uid }, gid=${ gid } `)
         } catch (error) {
-          console.error(
-            `${ getDateTime() } <SERVER>: failed to drop privileges: `, error
-          )
+          console.error(`${ getDateTime() } <SERVER>: failed to drop privileges: `, error)
         }
       }
 
