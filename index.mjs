@@ -38,9 +38,7 @@ try {
     const { url, method } = request
     const client = `${ clientAddress }:${ clientPort }`
 
-    console.log(
-      `${ getDateTime() } <${ client }>: ${ method } ${ url }`
-    )
+    console.log(`${ getDateTime() } <${ client }>: ${ method } ${ url }`)
 
     next()
   })
@@ -60,10 +58,7 @@ try {
   })
 
 } catch (error) {
-  console.error(
-    `${ getDateTime() } <SERVER>: Startup failed`,
-    error.message
-  )
+  console.error(`${ getDateTime() } <SERVER>: Startup failed`, error.message)
   exit(1)
 }
 
