@@ -48,11 +48,6 @@ try {
     response.end('Hello, World!')
   })
 
-  server.use((request, response) => {
-    response.writeHead(404, { 'Content-Type': 'text/plain' })
-    response.end('Error 404: Page Not Found')
-  })
-
   server.listen(port, host, () => {
     console.log(`${ getDateTime() } <SERVER>: start listen on port ${ server.port }`)
   })

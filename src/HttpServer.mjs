@@ -8,6 +8,7 @@ import Route from './Route.mjs'
 import Middleware from './Middleware.mjs'
 import { isArray, isFunction, isString } from './utils.mjs'
 import { getURL, getDateTime } from './utils.mjs'
+import { defaultError404 } from './middlewares.mjs'
 
 export default class HttpServer {
 
@@ -93,6 +94,9 @@ export default class HttpServer {
       this.#server = createServer(this.handle.bind(this))
     }
 
+    // system middlewares
+    this.use(defaultError404)
+
     const userCallback = args.find(isFunction)
 
     const listenCallback = () => {
@@ -119,6 +123,7 @@ export default class HttpServer {
       ? this.#server.listen(port, this.host, listenCallback)
       : this.#server.listen(port, listenCallback)
 
+    return this.#server
   }
 
   handle(request, response) {
