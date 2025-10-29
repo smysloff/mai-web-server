@@ -6,6 +6,7 @@ import { exit } from 'node:process'
 import HttpServer from './src/HttpServer.mjs'
 import { getReadableIP, getDateTime } from './src/utils.mjs'
 import Env from './src/Env.mjs'
+import { staticFiles } from './src/handlers.mjs'
 
 try {
 
@@ -47,6 +48,8 @@ try {
     response.writeHead(200, { 'Content-Type': 'text/plain' })
     response.end('Hello, World!')
   })
+
+  server.use(staticFiles('public'))
 
   server.listen(port, host, () => {
     console.log(`${ getDateTime() } <SERVER>: start listen on port ${ server.port }`)

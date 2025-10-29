@@ -8,7 +8,7 @@ import Route from './Route.mjs'
 import Middleware from './Middleware.mjs'
 import { isArray, isFunction, isString } from './utils.mjs'
 import { getURL, getDateTime } from './utils.mjs'
-import { defaultError404 } from './middlewares.mjs'
+import { defaultError404 } from './handlers.mjs'
 
 export default class HttpServer {
 

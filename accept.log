@@ -1,0 +1,115 @@
+2025-10-29 17:30:19 <SERVER>: redirect server start listen on port 80
+2025-10-29 17:30:19 <SERVER>: privileges dropped to uid=smysloff, gid=smysloff 
+2025-10-29 17:30:19 <SERVER>: start listen on port 443
+2025-10-29 17:30:22 <127.0.0.1:34674>: GET /test/page?user=bobby&age=32
+Http2ServerRequest {
+  _events: {
+    close: undefined,
+    error: undefined,
+    data: undefined,
+    end: undefined,
+    readable: undefined,
+    pause: [Function: onRequestPause],
+    resume: [Function: onRequestResume]
+  },
+  _readableState: ReadableState {
+    highWaterMark: 65536,
+    buffer: [],
+    bufferIndex: 0,
+    length: 0,
+    pipes: [],
+    awaitDrainWriters: null,
+    Symbol(kState): 1052936
+  },
+  _maxListeners: undefined,
+  _eventsCount: 2,
+  Symbol(shapeMode): true,
+  Symbol(kCapture): false,
+  Symbol(state): { closed: false, didRead: false },
+  Symbol(headers): [Object: null prototype] {
+    ':method': 'GET',
+    ':path': '/test/page?user=bobby&age=32',
+    ':authority': 'localhost',
+    ':scheme': 'https',
+    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0',
+    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'accept-language': 'en-US,en;q=0.5',
+    'accept-encoding': 'gzip, deflate, br, zstd',
+    'upgrade-insecure-requests': '1',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'none',
+    'sec-fetch-user': '?1',
+    priority: 'u=0, i',
+    te: 'trailers',
+    Symbol(sensitiveHeaders): []
+  },
+  Symbol(rawHeaders): [
+    ':method',
+    'GET',
+    ':path',
+    '/test/page?user=bobby&age=32',
+    ':authority',
+    'localhost',
+    ':scheme',
+    'https',
+    'user-agent',
+    'Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0',
+    'accept',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'accept-language',
+    'en-US,en;q=0.5',
+    'accept-encoding',
+    'gzip, deflate, br, zstd',
+    'upgrade-insecure-requests',
+    '1',
+    'sec-fetch-dest',
+    'document',
+    'sec-fetch-mode',
+    'navigate',
+    'sec-fetch-site',
+    'none',
+    'sec-fetch-user',
+    '?1',
+    'priority',
+    'u=0, i',
+    'te',
+    'trailers'
+  ],
+  Symbol(trailers): {},
+  Symbol(rawTrailers): [],
+  Symbol(stream): Http2Stream {
+    id: 3,
+    closed: false,
+    destroyed: false,
+    state: {
+      state: 2,
+      weight: 16,
+      sumDependencyWeight: 0,
+      localClose: 0,
+      remoteClose: 0,
+      localWindowSize: 65535
+    },
+    readableState: ReadableState {
+      highWaterMark: 65536,
+      buffer: [],
+      bufferIndex: 0,
+      length: 0,
+      pipes: [],
+      awaitDrainWriters: null,
+      Symbol(kState): 1315592
+    },
+    writableState: WritableState {
+      highWaterMark: 65536,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      Symbol(kState): 17564424,
+      Symbol(kBufferedValue): null
+    }
+  },
+  Symbol(aborted): false
+}
