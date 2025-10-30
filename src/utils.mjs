@@ -123,3 +123,21 @@ export function getDateTime(date = new Date(), fmt = '%y-%m-%d %h:%i:%s') {
     .replaceAll('%i', i)
     .replaceAll('%s', s)
 }
+
+export function throwTypeError(where, needle, passed) {
+
+  if (typeof where !=== 'string') {
+    throwTypeError('throwTypeError', 'string', typeof where)
+  }
+
+  if (typeof needle !== 'string') {
+    throwTypeError('throwTypeError', 'string', typeof needle)
+  }
+
+  if (typeof passed !== 'string') {
+    throwTypeError('throwTypeError', 'string', typeof passed)
+  }
+
+  throw new TypeError(`${ where } must be a type of ${ needle }, but passed ${ passed }`)
+
+}

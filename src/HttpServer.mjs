@@ -1,14 +1,19 @@
 
 // src/HttpServer.mjs
 
-import { createServer } from 'node:http'
 import { createSecureServer } from 'node:http2'
+import { createServer } from 'node:http'
 import { setuid, setgid } from 'node:process'
-import Route from './Route.mjs'
 import Middleware from './Middleware.mjs'
-import { isArray, isFunction, isString } from './utils.mjs'
+import Route from './Route.mjs'
 import { getURL, getDateTime } from './utils.mjs'
-import { defaultError404 } from './handlers.mjs'
+import { isArray, isFunction, isString } from './utils.mjs'
+
+import {
+  addAppToRequest,
+  addBaseUrlToRequest,
+  defaultError404,
+} from './handlers.mjs'
 
 export default class HttpServer {
 
@@ -17,10 +22,17 @@ export default class HttpServer {
   #settings = {}
 
   constructor({ cert, key, uid, gid } = {}) {
+
     this.#settings.cert = cert
     this.#settings.key = key
     this.#settings.uid = uid
     this.#settings.gid = gid
+
+    // System Pre-Middlewares
+    this.use(addAppToRequest(this))
+    this.use(addBaseUrlToRequest)
+    
+
   }
 
   use(path, ...handlers) {
@@ -94,8 +106,9 @@ export default class HttpServer {
       this.#server = createServer(this.handle.bind(this))
     }
 
-    // system middlewares
+    // System Post-Middlewares
     this.use(defaultError404)
+
 
     const userCallback = args.find(isFunction)
 

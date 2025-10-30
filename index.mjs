@@ -1,11 +1,11 @@
 
 // file: index.mjs
 
-import { readFile } from 'node:fs/promises'
 import { exit } from 'node:process'
+import { readFile } from 'node:fs/promises'
+import Env from './src/Env.mjs'
 import HttpServer from './src/HttpServer.mjs'
 import { getReadableIP, getDateTime } from './src/utils.mjs'
-import Env from './src/Env.mjs'
 import { staticFiles } from './src/handlers.mjs'
 
 try {
