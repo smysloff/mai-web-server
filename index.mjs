@@ -52,7 +52,7 @@ try {
   server.use(staticFiles('public'))
 
   server.listen(port, host, () => {
-    console.log(`${ getDateTime() } <SERVER>: start listen on port ${ server.port }`)
+    console.log(`${ getDateTime() } <SERVER>: Start listen on port ${ server.port }`)
   })
 
 } catch (error) {

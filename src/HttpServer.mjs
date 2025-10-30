@@ -11,7 +11,11 @@ import { isArray, isFunction, isString } from './utils.mjs'
 
 import {
   addAppToRequest,
-  addBaseUrlToRequest,
+  addOriginalUrlToRequest,
+  addHostToRequest,
+  addHostnameToRequest,
+  addIpToRequest,
+  addParamsToRequest,
   defaultError404,
 } from './handlers.mjs'
 
@@ -30,9 +34,10 @@ export default class HttpServer {
 
     // System Pre-Middlewares
     this.use(addAppToRequest(this))
-    this.use(addBaseUrlToRequest)
-    
-
+    this.use(addOriginalUrlToRequest)
+    this.use(addHostToRequest)
+    this.use(addHostnameToRequest)
+    this.use(addIpToRequest)
   }
 
   use(path, ...handlers) {
@@ -135,8 +140,6 @@ export default class HttpServer {
     return this.host
       ? this.#server.listen(port, this.host, listenCallback)
       : this.#server.listen(port, listenCallback)
-
-    return this.#server
   }
 
   handle(request, response) {

@@ -1,7 +1,6 @@
-2025-10-29 17:30:19 <SERVER>: redirect server start listen on port 80
-2025-10-29 17:30:19 <SERVER>: privileges dropped to uid=smysloff, gid=smysloff 
-2025-10-29 17:30:19 <SERVER>: start listen on port 443
-2025-10-29 17:30:22 <127.0.0.1:34674>: GET /test/page?user=bobby&age=32
+2025-10-30 16:45:16 <SERVER>: redirect server start listen on port 80
+2025-10-30 16:45:16 <SERVER>: privileges dropped to uid=smysloff, gid=smysloff 
+2025-10-30 16:45:16 <SERVER>: Start listen on port 443
 Http2ServerRequest {
   _events: {
     close: undefined,
@@ -112,4 +111,19 @@ Http2ServerRequest {
     }
   },
   Symbol(aborted): false
+}
+2025-10-30 16:45:20 <127.0.0.1:34622>: GET /test/page?user=bobby&age=32
+URL {
+  href: 'https://localhost/test/page?user=bobby&age=32',
+  origin: 'https://localhost',
+  protocol: 'https:',
+  username: '',
+  password: '',
+  host: 'localhost',
+  hostname: 'localhost',
+  port: '',
+  pathname: '/test/page',
+  search: '?user=bobby&age=32',
+  searchParams: URLSearchParams { 'user' => 'bobby', 'age' => '32' },
+  hash: ''
 }

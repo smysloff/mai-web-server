@@ -1,8 +1,13 @@
 
 // src/handlers.mjs
 
-import { isString, throwTypeError } from './utils.mjs'
-import HttpServer from './HttpServer.mjs'
+import {
+  getReadableIP,
+  getUrl,
+  isFunction.
+  isString,
+  throwTypeError,
+} from './utils.mjs'
 
 export function defaultError404(request, response) {
   response.writeHead(404, { 'Content-Type': 'text/plain' })
@@ -10,10 +15,17 @@ export function defaultError404(request, response) {
 }
 
 export function addAppToRequest(app) {
-  if (!(app instanceof HttpServer)) {
-    throwTypeError('app', 'HttpServer', typeof app)
+
+  if (
+    !app
+    || !isFunction(app.use)
+    || !isFunction(app.get)
+    || !isFunction(app.post)
+  ) {
+    throwTypeError('app', 'HttpServer-like object', typeof app)
   }
-  return function (request, response, next) {
+
+  return function(request, response, next) {
     request.app = app
     next()
   }
@@ -21,6 +33,13 @@ export function addAppToRequest(app) {
 
 export function addOriginalUrlToRequest(request, response, next) {
   request.originalUrl = request.url
+  next()
+}
+
+export function addPathToRequest(request, response, next) {
+  const scheme = request.socket.encrypted ? 'https' : 'http'
+  const url = getUrl(request.hostname, request.url, scheme === 'https')
+  request.path = url.pathname
   next()
 }
 
@@ -44,19 +63,33 @@ export function addIpToRequest(request, response, next) {
   const { socket, headers } = request
   const { remoteAddress } = socket
   const forwarded = headers['x-forwarded-for']
-  const realIp = headers['x-real-ip']
+  const realIP = headers['x-real-ip']
+
+  let ip
 
   if (forwarded) {
-    request.ip = forwarded.split(',')[0].trim()
+    ip = forwarded.split(',')[0].trim()
+  } else if (realIP) {
+    ip = realIP
+  } else {
+    ip = remoteAddress
   }
 
-  else if (realIp) {
-    request.ip = realIp
-  }
-
-  return remoteAddress
+  request.ip = getReadableIP(ip)
 
   next()
+}
+
+export function addParamsToRequest(params = {}) {
+
+  if (typeof params !== 'object') {
+    throwTypeError('params', 'object', typeof params)
+  }
+
+  return function(request, response, next) {
+    request.params = params
+    next()
+  }
 }
 
 
@@ -64,30 +97,12 @@ export function addIpToRequest(request, response, next) {
 export function staticFiles(directory) {
 
   if (!isString(directory)) {
-    throw new TypeError(`'directory' must be a string type but passed ${ typeof directory }`)
+    throwTypeError('directory', 'string', typeof directory)
   }
 
-  return function (request, response, next) {
-
-    const { url, headers, connection, socket } = request
-
-    const host = headers[':authority'] || headers['host'] || 'localhost'
-    const hostname = host.replace(/:\d+$/, '')
-
-    let scheme = 'http'
-    if (headers[':scheme']) {
-      scheme = headers[':scheme'] // HTTP/2
-    } else if (connection.encrypted || socket.encrypted) {
-      scheme = 'https' // HTTP/1 over TLS
-    }
+  return async function (request, response, next) {
 
     // @todo
-
-    const location = `${ scheme }://${ host }${ url }`
-
-    const _url = new URL(location)
-
-    console.log(_url)
 
     next()
   }

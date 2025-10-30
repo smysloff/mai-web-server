@@ -56,7 +56,7 @@ export function getReadableIP(ip) {
  * @param {boolean} [isSecure=false] - Whether to use HTTPS protocol.
  * @returns {URL} The constructed URL object.
  */
-export function getURL(host, path, isSecure = false) {
+export function getUrl(host, path, isSecure = false) {
   const protocol = isSecure ? 'https' : 'http'
   const hostname = `${ protocol }://${ host }`
   return new URL(path, hostname)
@@ -126,7 +126,7 @@ export function getDateTime(date = new Date(), fmt = '%y-%m-%d %h:%i:%s') {
 
 export function throwTypeError(where, needle, passed) {
 
-  if (typeof where !=== 'string') {
+  if (typeof where !== 'string') {
     throwTypeError('throwTypeError', 'string', typeof where)
   }
 
@@ -139,5 +139,4 @@ export function throwTypeError(where, needle, passed) {
   }
 
   throw new TypeError(`${ where } must be a type of ${ needle }, but passed ${ passed }`)
-
 }
