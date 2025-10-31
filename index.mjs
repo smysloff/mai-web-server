@@ -32,6 +32,7 @@ try {
 
   const server = new HttpServer(options)
 
+  // logger
   server.use((request, response, next) => {
 
     const clientAddress = getReadableIP(request.socket.remoteAddress)
@@ -42,6 +43,33 @@ try {
     console.log(`${ getDateTime() } <${ client }>: ${ method } ${ url }`)
 
     next()
+  })
+
+  server.use((request, response, next) => {
+
+    console.log('app', request.app)
+    //console.log('baseUrl', request.baseUrl)
+    //console.log('body', request.body)
+    //console.log('cookies', request.cookies)
+    //console.log('fresh', request.fresh)
+    console.log('host', request.host)
+    console.log('hostname', request.hostname)
+    console.log('ip', request.ip)
+    //console.log('ips', request.ips)
+    console.log('method', request.method)
+    console.log('url', request.url)
+    console.log('originalUrl', request.originalUrl)
+    console.log('params', request.params)
+    console.log('path', request.path)
+    console.log('protocol', request.protocol)
+    console.log('res', request.res)
+    console.log('route', request.route)
+    console.log('secure', request.secure)
+    //console.log('signedCookies', request.signedCookies)
+    //console.log('stale', request.stale)
+    //console.log('subdomains', request.subdomains)
+    //console.log('xhr', request.xhr)
+
   })
 
   server.get('/', (request, response) => {
@@ -59,4 +87,3 @@ try {
   console.error(`${ getDateTime() } <SERVER>: Startup failed`, error.message)
   exit(1)
 }
-

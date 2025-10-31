@@ -31,6 +31,16 @@ export function addAppToRequest(app) {
   }
 }
 
+export function addBaseUrlToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addBodyToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
 export function addOriginalUrlToRequest(request, response, next) {
   request.originalUrl = request.url
   next()
