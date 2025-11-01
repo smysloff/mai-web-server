@@ -34,10 +34,28 @@ export default class HttpServer {
 
     // System Pre-Middlewares
     this.use(addAppToRequest(this))
-    this.use(addOriginalUrlToRequest)
+    this.use(addBaseUrlToRequest))
+    this.use(addBodyToRequest)
+    this.use(addCookiesToRequest)
+    this.use(addFreshToRequest)
     this.use(addHostToRequest)
     this.use(addHostnameToRequest)
     this.use(addIpToRequest)
+    this.use(addIpsToRequest)
+    this.use(addMethodToRequest)
+    this.use(addOriginalUrlToRequest)
+    this.use(addParamsToRequest)
+    this.use(addPathToRequest)
+    this.use(addProtocolToRequest)
+    this.use(addQueryToRequest)
+    this.use(addResponseToRequest)
+    this.use(addRouteToRequest)
+    this.use(addSecureToRequest)
+    this.use(addSignedCookiesToRequest)
+    this.use(addStaleToRequest)
+    this.use(addSubdomainsToRequest)
+    this.use(addXhrToRequest)
+    this.use(addLocationToRequest)
   }
 
   use(path, ...handlers) {

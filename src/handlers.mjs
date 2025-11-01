@@ -41,20 +41,15 @@ export function addBodyToRequest(request, response, next) {
   next()
 }
 
-export function addOriginalUrlToRequest(request, response, next) {
-  request.originalUrl = request.url
+export function addCookiesToRequest(request, response, next) {
+  // @todo
   next()
 }
 
-export function addPathToRequest(request, response, next) {
-  const scheme = request.socket.encrypted ? 'https' : 'http'
-  const url = getUrl(request.hostname, request.url, scheme === 'https')
-  request.path = url.pathname
+export function addFreshToRequest(request, response, next) {
+  // @todo
   next()
 }
-
-// @todo addBodyToRequest
-// @todo addCookiesToRequest
 
 export function addHostToRequest(request, response, next) {
   request.host = request.headers[':authority'] // HTTP2
@@ -90,6 +85,21 @@ export function addIpToRequest(request, response, next) {
   next()
 }
 
+export function addIpsToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addMethodToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addOriginalUrlToRequest(request, response, next) {
+  request.originalUrl = request.url
+  next()
+}
+
 export function addParamsToRequest(params = {}) {
 
   if (typeof params !== 'object') {
@@ -102,7 +112,67 @@ export function addParamsToRequest(params = {}) {
   }
 }
 
+export function addPathToRequest(request, response, next) {
+  const scheme = request.socket.encrypted ? 'https' : 'http'
+  const url = getUrl(request.hostname, request.url, scheme === 'https')
+  request.path = url.pathname
+  next()
+}
 
+export function addPathToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addProtocolToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addQueryToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addResponseToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addRouteToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addSecureToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addSignedCookiesToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addStaleToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addSubdomainsToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addXhrToRequest(request, response, next) {
+  // @todo
+  next()
+}
+
+export function addLocationToRequest(request) {
+  // @todo
+  next()
+}
 
 export function staticFiles(directory) {
 
@@ -111,10 +181,7 @@ export function staticFiles(directory) {
   }
 
   return async function (request, response, next) {
-
     // @todo
-
     next()
   }
-
 }

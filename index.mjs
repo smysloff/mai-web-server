@@ -57,18 +57,21 @@ try {
     console.log('ip', request.ip)
     //console.log('ips', request.ips)
     console.log('method', request.method)
-    console.log('url', request.url)
     console.log('originalUrl', request.originalUrl)
     console.log('params', request.params)
     console.log('path', request.path)
     console.log('protocol', request.protocol)
-    console.log('res', request.res)
+    console.log('query', request.query)
+    console.log('res', request.res) // response
     console.log('route', request.route)
     console.log('secure', request.secure)
     //console.log('signedCookies', request.signedCookies)
     //console.log('stale', request.stale)
     //console.log('subdomains', request.subdomains)
     //console.log('xhr', request.xhr)
+
+    //console.log('location', request.location)
+    console.log('url', request.url)
 
   })
 
